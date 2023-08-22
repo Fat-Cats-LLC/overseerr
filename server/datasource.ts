@@ -3,36 +3,7 @@ import type { DataSourceOptions, EntityTarget, Repository } from 'typeorm';
 import { DataSource } from 'typeorm';
 
 const devConfig: DataSourceOptions = {
-  type: 'sqlite',
-  database: process.env.CONFIG_DIRECTORY
-    ? `${process.env.CONFIG_DIRECTORY}/db/db.sqlite3`
-    : 'config/db/db.sqlite3',
-  synchronize: true,
-  migrationsRun: false,
-  logging: false,
-  enableWAL: true,
-  entities: ['server/entity/**/*.ts'],
-  migrations: ['server/migration/**/*.ts'],
-  subscribers: ['server/subscriber/**/*.ts'],
-};
-
-const prodConfig: DataSourceOptions = {
-  type: 'sqlite',
-  database: process.env.CONFIG_DIRECTORY
-    ? `${process.env.CONFIG_DIRECTORY}/db/db.sqlite3`
-    : 'config/db/db.sqlite3',
-  synchronize: false,
-  migrationsRun: false,
-  logging: false,
-  enableWAL: true,
-  entities: ['dist/entity/**/*.js'],
-  migrations: ['dist/migration/**/*.js'],
-  subscribers: ['dist/subscriber/**/*.js'],
-};
-
-const postgresDevConfig: DataSourceOptions = {
   type: 'postgres',
-  name: 'pgdb',
   host: process.env.DB_HOST,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
@@ -45,9 +16,8 @@ const postgresDevConfig: DataSourceOptions = {
   subscribers: ['server/subscriber/**/*.ts'],
 };
 
-const postgresProdConfig: DataSourceOptions = {
+const prodConfig: DataSourceOptions = {
   type: 'postgres',
-  name: 'pgdb',
   host: process.env.DB_HOST,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
@@ -64,12 +34,7 @@ export const isPgsql = process.env.DB_TYPE === 'postgres';
 
 function getDataSource(): DataSourceOptions {
   if (process.env.NODE_ENV === 'production') {
-    if (isPgsql) {
-      return postgresProdConfig;
-    }
     return prodConfig;
-  } else if (isPgsql) {
-    return postgresDevConfig;
   }
   return devConfig;
 }
