@@ -18,7 +18,6 @@
     "typecheck": "yarn typecheck:server && yarn typecheck:client",
     "typecheck:server": "tsc --project server/tsconfig.json --noEmit",
     "typecheck:client": "tsc --noEmit",
-    "prepare": "husky install",
     "cypress:open": "cypress open",
     "cypress:prepare": "ts-node -r tsconfig-paths/register --files --project server/tsconfig.json server/scripts/prepareTestDb.ts",
     "cypress:build": "yarn build && yarn cypress:prepare"
@@ -87,7 +86,6 @@
     "reflect-metadata": "0.1.13",
     "secure-random-password": "0.2.3",
     "semver": "7.3.8",
-    "sqlite3": "5.1.4",
     "swagger-ui-express": "4.6.2",
     "swr": "2.0.4",
     "typeorm": "0.3.12",
@@ -151,7 +149,6 @@
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "extract-react-intl-messages": "4.1.1",
-    "husky": "8.0.3",
     "lint-staged": "13.1.2",
     "nodemon": "2.0.20",
     "postcss": "8.4.21",
@@ -167,7 +164,6 @@
     "typescript": "4.9.5"
   },
   "resolutions": {
-    "sqlite3/node-gyp": "8.4.1",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@types/express-session": "1.17.6"
