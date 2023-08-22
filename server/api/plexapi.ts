@@ -124,9 +124,9 @@ class PlexAPI {
       // },
       options: {
         identifier: settings.clientId,
-        product: 'Overseerr',
-        deviceName: 'Overseerr',
-        platform: 'Overseerr',
+        product: 'Oversneedrr',
+        deviceName: 'Oversneedrr',
+        platform: 'Oversneedrr',
       },
     });
   }

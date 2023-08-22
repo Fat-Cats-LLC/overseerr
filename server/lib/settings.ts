@@ -280,7 +280,7 @@ class Settings {
       vapidPublic: '',
       main: {
         apiKey: '',
-        applicationTitle: 'Overseerr',
+        applicationTitle: 'Oversneedrr',
         applicationUrl: '',
         csrfProtection: false,
         cacheImages: false,
@@ -323,7 +323,7 @@ class Settings {
               ignoreTls: false,
               requireTls: false,
               allowSelfSigned: false,
-              senderName: 'Overseerr',
+              senderName: 'Oversneedrr',
             },
           },
           discord: {

@@ -38,7 +38,7 @@ import YAML from 'yamljs';
 
 const API_SPEC_PATH = path.join(__dirname, '../overseerr-api.yml');
 
-logger.info(`Starting Overseerr version ${getAppVersion()}`);
+logger.info(`Starting Oversneedrr version ${getAppVersion()}`);
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -49,10 +49,12 @@ app
     const dbConnection = await dataSource.initialize();
 
     // Run migrations in production
-    /*if (process.env.NODE_ENV === 'production') {
-      await dbConnection.query('PRAGMA foreign_keys=OFF');
+    if (process.env.NODE_ENV === 'production') {
       await dbConnection.runMigrations();
-      await dbConnection.query('PRAGMA foreign_keys=ON');
+    }
+    // Test migrations in development
+    /*if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+      await dbConnection.runMigrations();
     }*/
 
     // Load Settings
