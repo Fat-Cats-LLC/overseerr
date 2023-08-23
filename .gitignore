@@ -32,7 +32,6 @@ yarn-error.log*
 .vercel
 
 # database
-config/db/*.sqlite3*
 config/settings.json
 
 # logs
@@ -47,9 +46,6 @@ config/anime-list.xml
 
 # dist files
 dist
-
-# sqlite journal
-config/db/db.sqlite3-journal
 
 # VS Code
 .vscode/launch.json

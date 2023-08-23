@@ -12,7 +12,6 @@
 .gitignore
 .next
 .prettierignore
-config/db/*
 config/logs/*
 config/*.json
 dist
