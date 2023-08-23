@@ -14,10 +14,10 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link rel="preconnect" href="https://koruri.chillout.chat" />
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+            href="https://koruri.chillout.chat/koruri.css"
           />
         </Head>
         <body>
