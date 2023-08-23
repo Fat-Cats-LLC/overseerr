@@ -7,14 +7,7 @@
     "typescriptreact"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "sqltools.connections": [
-    {
-      "previewLimit": 50,
-      "driver": "SQLite",
-      "name": "Local SQLite",
-      "database": "./config/db/db.sqlite3"
-    }
-  ],
+  "sqltools.connections": [],
   "editor.formatOnSave": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "files.associations": {
