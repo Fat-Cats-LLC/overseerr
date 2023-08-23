@@ -1,7 +1,6 @@
 import AppDataWarning from '@app/components/AppDataWarning';
 import Badge from '@app/components/Common/Badge';
 import Button from '@app/components/Common/Button';
-import ImageFader from '@app/components/Common/ImageFader';
 import PageTitle from '@app/components/Common/PageTitle';
 import LanguagePicker from '@app/components/Layout/LanguagePicker';
 import SettingsPlex from '@app/components/Settings/SettingsPlex';
@@ -13,7 +12,8 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import useSWR, { mutate } from 'swr';
+import { mutate } from 'swr';
+import BackgroundImage from "@app/components/Common/BackgroundImage";
 
 const messages = defineMessages({
   setup: 'Setup',
@@ -51,22 +51,10 @@ const Setup = () => {
     }
   };
 
-  const { data: backdrops } = useSWR<string[]>('/api/v1/backdrops', {
-    refreshInterval: 0,
-    refreshWhenHidden: false,
-    revalidateOnFocus: false,
-  });
-
   return (
     <div className="relative flex min-h-screen flex-col justify-center bg-gray-900 py-12">
       <PageTitle title={intl.formatMessage(messages.setup)} />
-      <ImageFader
-        backgroundImages={
-          backdrops?.map(
-            (backdrop) => `https://image.tmdb.org/t/p/original${backdrop}`
-          ) ?? []
-        }
-      />
+      <BackgroundImage backgroundImage="/sneeds-feed-and-seed.jpg" />
       <div className="absolute top-4 right-4 z-50">
         <LanguagePicker />
       </div>

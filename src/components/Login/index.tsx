@@ -1,5 +1,4 @@
 import Accordion from '@app/components/Common/Accordion';
-import ImageFader from '@app/components/Common/ImageFader';
 import PageTitle from '@app/components/Common/PageTitle';
 import LanguagePicker from '@app/components/Layout/LanguagePicker';
 import LocalLogin from '@app/components/Login/LocalLogin';
@@ -12,7 +11,7 @@ import axios from 'axios';
 import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import useSWR from 'swr';
+import BackgroundImage from "@app/components/Common/BackgroundImage";
 
 const messages = defineMessages({
   signin: 'Sign In',
@@ -61,22 +60,10 @@ const Login = () => {
     }
   }, [user, router]);
 
-  const { data: backdrops } = useSWR<string[]>('/api/v1/backdrops', {
-    refreshInterval: 0,
-    refreshWhenHidden: false,
-    revalidateOnFocus: false,
-  });
-
   return (
     <div className="relative flex min-h-screen flex-col bg-gray-900 py-14">
       <PageTitle title={intl.formatMessage(messages.signin)} />
-      <ImageFader
-        backgroundImages={
-          backdrops?.map(
-            (backdrop) => `https://image.tmdb.org/t/p/original${backdrop}`
-          ) ?? []
-        }
-      />
+      <BackgroundImage backgroundImage="/sneeds-feed-and-seed.jpg" />
       <div className="absolute top-4 right-4 z-50">
         <LanguagePicker />
       </div>

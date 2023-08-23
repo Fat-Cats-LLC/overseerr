@@ -246,39 +246,6 @@ router.get('/genres/tv', isAuthenticated(), async (req, res, next) => {
   }
 });
 
-router.get('/backdrops', async (req, res, next) => {
-  const tmdb = createTmdbWithRegionLanguage();
-
-  try {
-    const data = (
-      await tmdb.getAllTrending({
-        page: 1,
-        timeWindow: 'week',
-      })
-    ).results.filter((result) => !isPerson(result)) as (
-      | TmdbMovieResult
-      | TmdbTvResult
-    )[];
-
-    return res
-      .status(200)
-      .json(
-        data
-          .map((result) => result.backdrop_path)
-          .filter((backdropPath) => !!backdropPath)
-      );
-  } catch (e) {
-    logger.debug('Something went wrong retrieving backdrops', {
-      label: 'API',
-      errorMessage: e.message,
-    });
-    return next({
-      status: 500,
-      message: 'Unable to retrieve backdrops.',
-    });
-  }
-});
-
 router.get('/keyword/:keywordId', async (req, res, next) => {
   const tmdb = createTmdbWithRegionLanguage();
 
