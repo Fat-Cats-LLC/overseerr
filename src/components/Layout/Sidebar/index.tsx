@@ -148,13 +148,13 @@ const Sidebar = ({ open, setClosed }: SidebarProps) => {
                     className="flex flex-1 flex-col overflow-y-auto pt-8 pb-8 sm:pb-4"
                   >
                     <div className="flex flex-shrink-0 items-center px-2">
-                      <span className="px-4 text-xl text-gray-50">
+                      <span className="px-2 text-xl text-gray-50">
                         <a href="/">
                           <img src="/logo_full.svg" alt="Logo" />
                         </a>
                       </span>
                     </div>
-                    <nav className="mt-16 flex-1 space-y-4 px-4">
+                    <nav className="mt-8 flex-1 space-y-3 px-3">
                       {SidebarLinks.filter((link) =>
                         link.requiredPermission
                           ? hasPermission(link.requiredPermission, {
@@ -218,13 +218,13 @@ const Sidebar = ({ open, setClosed }: SidebarProps) => {
           <div className="flex h-0 flex-1 flex-col">
             <div className="flex flex-1 flex-col overflow-y-auto pt-8 pb-4">
               <div className="flex flex-shrink-0 items-center">
-                <span className="px-4 text-2xl text-gray-50">
+                <span className="px-2 text-xl text-gray-50">
                   <a href="/">
                     <img src="/logo_full.svg" alt="Logo" />
                   </a>
                 </span>
               </div>
-              <nav className="mt-16 flex-1 space-y-4 px-4">
+              <nav className="mt-8 flex-1 space-y-4 px-3">
                 {SidebarLinks.filter((link) =>
                   link.requiredPermission
                     ? hasPermission(link.requiredPermission, {
