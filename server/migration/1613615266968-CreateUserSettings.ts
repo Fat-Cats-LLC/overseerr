@@ -7,14 +7,21 @@ export class CreateUserSettings1613615266968 implements MigrationInterface {
     await queryRunner.query(
       `CREATE TABLE "user_settings" ("id" SERIAL PRIMARY KEY, "enableNotifications" boolean NOT NULL DEFAULT (true), "discordId" varchar, "userId" integer, CONSTRAINT "REL_986a2b6d3c05eb4091bb8066f7" UNIQUE ("userId"))`
     );
-    await queryRunner.query(`ALTER TABLE "user_settings" DROP CONSTRAINT IF EXISTS "REL_986a2b6d3c05eb4091bb8066f7"`)
+
+    await queryRunner.query(
+      `ALTER TABLE "user_settings" DROP CONSTRAINT IF EXISTS "REL_986a2b6d3c05eb4091bb8066f7"`
+    ); // new
+
     await queryRunner.query(
       `CREATE TABLE "temporary_user_settings" ("id" SERIAL PRIMARY KEY, "enableNotifications" boolean NOT NULL DEFAULT (true), "discordId" varchar, "userId" integer, CONSTRAINT "REL_986a2b6d3c05eb4091bb8066f7" UNIQUE ("userId"), CONSTRAINT "FK_986a2b6d3c05eb4091bb8066f78" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE CASCADE ON UPDATE NO ACTION)`
     );
+
     await queryRunner.query(
       `INSERT INTO "temporary_user_settings"("id", "enableNotifications", "discordId", "userId") SELECT "id", "enableNotifications", "discordId", "userId" FROM "user_settings"`
     );
+
     await queryRunner.query(`DROP TABLE "user_settings"`);
+
     await queryRunner.query(
       `ALTER TABLE "temporary_user_settings" RENAME TO "user_settings"`
     );
