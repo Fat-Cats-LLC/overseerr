@@ -7,21 +7,14 @@ export class UpdateUserSettingsRegions1613955393450
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "user_settings" DROP CONSTRAINT IF EXISTS "UQ_986a2b6d3c05eb4091bb8066f78"`
-    ); // new
-
+      `ALTER TABLE "user_settings" ADD COLUMN "region" varchar`
+    );
     await queryRunner.query(
-      `CREATE TABLE "temporary_user_settings" ("id" SERIAL PRIMARY KEY, "enableNotifications" boolean NOT NULL DEFAULT (true), "discordId" varchar, "userId" integer, "region" varchar, "originalLanguage" varchar, CONSTRAINT "UQ_986a2b6d3c05eb4091bb8066f78" UNIQUE ("userId"), CONSTRAINT "FK_986a2b6d3c05eb4091bb8066f78" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE CASCADE ON UPDATE NO ACTION)`
+      `ALTER TABLE "user_settings" ADD COLUMN "originalLanguage" varchar`
     );
 
     await queryRunner.query(
-      `INSERT INTO "temporary_user_settings"("id", "enableNotifications", "discordId", "userId") SELECT "id", "enableNotifications", "discordId", "userId" FROM "user_settings"`
-    );
-
-    await queryRunner.query(`DROP TABLE "user_settings"`);
-
-    await queryRunner.query(
-      `ALTER TABLE "temporary_user_settings" RENAME TO "user_settings"`
+      `ALTER TABLE "user_settings" RENAME CONSTRAINT "REL_986a2b6d3c05eb4091bb8066f7" TO "UQ_986a2b6d3c05eb4091bb8066f78"`
     );
   }
 
