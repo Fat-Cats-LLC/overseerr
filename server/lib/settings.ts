@@ -69,6 +69,8 @@ export interface RadarrSettings extends DVRSettings {
 }
 
 export interface SonarrSettings extends DVRSettings {
+  seriesType: 'standard' | 'daily' | 'anime';
+  animeSeriesType: 'standard' | 'daily' | 'anime';
   activeAnimeProfileId?: number;
   activeAnimeProfileName?: string;
   activeAnimeDirectory?: string;
@@ -190,6 +192,7 @@ export interface NotificationAgentPushover extends NotificationAgentConfig {
   options: {
     accessToken: string;
     userToken: string;
+    sound: string;
   };
 }
 
@@ -370,6 +373,7 @@ class Settings {
             options: {
               accessToken: '',
               userToken: '',
+              sound: '',
             },
           },
           webhook: {
