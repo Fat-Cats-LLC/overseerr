@@ -56,34 +56,38 @@ export class InitialMigration1603944374840 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    // drop all foreign keys
     await queryRunner.query(
-      `ALTER TABLE "media_request" RENAME TO "temporary_media_request"`
+      `ALTER TABLE "season_request" DROP CONSTRAINT "FK_6f14737e346d6b27d8e50d2157a"`
     );
     await queryRunner.query(
-      `CREATE TABLE "media_request" ("id" SERIAL PRIMARY KEY, "status" integer NOT NULL, "createdAt" timestamp without time zone NOT NULL DEFAULT (now()), "updatedAt" timestamp without time zone NOT NULL DEFAULT (now()), "type" varchar NOT NULL, "mediaId" integer, "requestedById" integer, "modifiedById" integer)`
+      `ALTER TABLE "media_request" DROP CONSTRAINT "FK_a1aa713f41c99e9d10c48da75a0"`
     );
     await queryRunner.query(
-      `INSERT INTO "media_request"("id", "status", "createdAt", "updatedAt", "type", "mediaId", "requestedById", "modifiedById") SELECT "id", "status", "createdAt", "updatedAt", "type", "mediaId", "requestedById", "modifiedById" FROM "temporary_media_request"`
-    );
-    await queryRunner.query(`DROP TABLE "temporary_media_request"`);
-    await queryRunner.query(
-      `ALTER TABLE "season_request" RENAME TO "temporary_season_request"`
+      `ALTER TABLE "media_request" DROP CONSTRAINT "FK_6997bee94720f1ecb7f31137095"`
     );
     await queryRunner.query(
-      `CREATE TABLE "season_request" ("id" SERIAL PRIMARY KEY, "seasonNumber" integer NOT NULL, "status" integer NOT NULL DEFAULT (1), "createdAt" timestamp without time zone NOT NULL DEFAULT (now()), "updatedAt" timestamp without time zone NOT NULL DEFAULT (now()), "requestId" integer)`
+      `ALTER TABLE "media_request" DROP CONSTRAINT "FK_f4fc4efa14c3ba2b29c4525fa15"`
     );
-    await queryRunner.query(
-      `INSERT INTO "season_request"("id", "seasonNumber", "status", "createdAt", "updatedAt", "requestId") SELECT "id", "seasonNumber", "status", "createdAt", "updatedAt", "requestId" FROM "temporary_season_request"`
-    );
-    await queryRunner.query(`DROP TABLE "temporary_season_request"`);
+
+    // indexes next
     await queryRunner.query(`DROP INDEX "IDX_28c5d1d16da7908c97c9bc2f74"`);
-    await queryRunner.query(`DROP TABLE "session"`);
-    await queryRunner.query(`DROP INDEX "IDX_7ff2d11f6a83cb52386eaebe74"`);
-    await queryRunner.query(`DROP INDEX "IDX_41a289eb1fa489c1bc6f38d9c3"`);
+
     await queryRunner.query(`DROP INDEX "IDX_7157aad07c73f6a6ae3bbd5ef5"`);
-    await queryRunner.query(`DROP TABLE "media"`);
-    await queryRunner.query(`DROP TABLE "media_request" CASCADE`);
-    await queryRunner.query(`DROP TABLE "season_request"`);
+
+    await queryRunner.query(`DROP INDEX "IDX_41a289eb1fa489c1bc6f38d9c3"`);
+
+    await queryRunner.query(`DROP INDEX "IDX_7ff2d11f6a83cb52386eaebe74"`);
+
+    // finally nuke the tables
     await queryRunner.query(`DROP TABLE "user"`);
+
+    await queryRunner.query(`DROP TABLE "season_request"`);
+
+    await queryRunner.query(`DROP TABLE "media_request"`);
+
+    await queryRunner.query(`DROP TABLE "media"`);
+
+    await queryRunner.query(`DROP TABLE "session"`);
   }
 }

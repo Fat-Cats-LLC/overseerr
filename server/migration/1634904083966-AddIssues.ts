@@ -14,24 +14,6 @@ export class AddIssues1634904083966 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `ALTER TABLE "issue_comment" RENAME TO "temporary_issue_comment"`
-    );
-    await queryRunner.query(
-      `CREATE TABLE "issue_comment" ("id" SERIAL PRIMARY KEY, "message" text NOT NULL, "createdAt" timestamp without time zone NOT NULL DEFAULT (now()), "updatedAt" timestamp without time zone NOT NULL DEFAULT (now()), "userId" integer, "issueId" integer)`
-    );
-    await queryRunner.query(
-      `INSERT INTO "issue_comment"("id", "message", "createdAt", "updatedAt", "userId", "issueId") SELECT "id", "message", "createdAt", "updatedAt", "userId", "issueId" FROM "temporary_issue_comment"`
-    );
-    await queryRunner.query(`DROP TABLE "temporary_issue_comment"`);
-    await queryRunner.query(`ALTER TABLE "issue" RENAME TO "temporary_issue"`);
-    await queryRunner.query(
-      `CREATE TABLE "issue" ("id" SERIAL PRIMARY KEY, "issueType" integer NOT NULL, "status" integer NOT NULL DEFAULT (1), "problemSeason" integer NOT NULL DEFAULT (0), "problemEpisode" integer NOT NULL DEFAULT (0), "createdAt" timestamp without time zone NOT NULL DEFAULT (now()), "updatedAt" timestamp without time zone NOT NULL DEFAULT (now()), "mediaId" integer, "createdById" integer, "modifiedById" integer)`
-    );
-    await queryRunner.query(
-      `INSERT INTO "issue"("id", "issueType", "status", "problemSeason", "problemEpisode", "createdAt", "updatedAt", "mediaId", "createdById", "modifiedById") SELECT "id", "issueType", "status", "problemSeason", "problemEpisode", "createdAt", "updatedAt", "mediaId", "createdById", "modifiedById" FROM "temporary_issue"`
-    );
-    await queryRunner.query(`DROP TABLE "temporary_issue"`);
     await queryRunner.query(`DROP TABLE "issue_comment"`);
     await queryRunner.query(`DROP TABLE "issue"`);
   }
