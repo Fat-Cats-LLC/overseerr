@@ -1,72 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#1f2937" />
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#1f2937"/>
+  <title>Oversneedrr</title>
+  <style>
+    /********* public:offline.less ********/
+    html {
+      font: 1rem / 1.4 sans-serif;
+      font-family: "Segoe UI", "Open Sans", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-weight: 400;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      word-wrap: break-word;
+      background-color: #111827
+    }
 
-    <title>Oversneedrr</title>
+    body {
+      max-width: 80%;
+      padding: 0 10px;
+      margin: 0 auto
+    }
 
-    <!-- Inline the page's stylesheet. -->
-    <style>
-      body {
-        font-family: "Segoe UI", "Ubuntu", helvetica, arial, sans-serif;
-        margin: 2em;
-        background-color: #111827;
-        color: white;
-      }
+    a {
+      color: #6ba65e;
+      text-decoration: none;
+      font-weight: 500;
+    }
 
-      h1 {
-        color: #6366f1;
-      }
+    .header {
+      padding: 0;
+      font-size: 1.33rem;
+      font-weight: 400
+    }
 
-      p {
-        margin-block: 1rem;
-      }
+    .main {
+      margin-bottom: 16px;
+      padding: 6px 8px;
+      color: #ffffff;
+      border: 0 solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+      background: #19243b none;
+    }
 
-      button {
-        display: block;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Oversneedrr is not accessible at the moment.</h1>
-    <p>Please check your network connection and/or the server running Oversneedrr</p>
+    .main:before, .main:after {
+      content: " ";
+      display: table
+    }
 
-    <button type="button">↻ Reload</button>
+    .main:after {
+      clear: both
+    }
 
-    <!-- Inline the page's JavaScript file. -->
-    <script>
-      // Manual reload feature.
-      document.querySelector('button').addEventListener('click', () => {
-        window.location.reload();
-      });
+    .button, a.button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid #15171a;
+      white-space: nowrap;
+      -webkit-transition: background-color .075s ease, border-color .075s ease, color .075s ease;
+      transition: background-color .075s ease, border-color .075s ease, color .075s ease;
+      font-size: 0.95rem;
+      border-radius: 4px;
+      padding: 8px 10px;
+      text-align: center;
+      color: #fff;
+      background: #212428;
+    }
+  </style>
+</head>
 
-      // Listen to changes in the network state, reload when online.
-      // This handles the case when the device is completely offline.
-      window.addEventListener('online', () => {
-        window.location.reload();
-      });
+<body>
+  <h1 class="header">Oversneedrr is unavailable</h1>
+  <div class="main">The requested page couldn't be loaded.
+    <ul>
+      <li>Check your internet connection and try again.</li>
+      <li>Certain browser extensions, such as ad blockers, may block pages unexpectedly. Disable these and try again.</li>
+      <li>The Oversneedrr instance may be offline, temporarily or permanently. Please check back later and/or report this
+        issue to the instance owner.
+      </li>
+    </ul>
+    <a id="reload" class="button">↻ Reload</a>
+  </div>
 
-      // Check if the server is responding and reload the page if it is.
-      // This handles the case when the device is online, but the server
-      // is offline or misbehaving.
-      async function checkNetworkAndReload() {
-        try {
-          const response = await fetch('.');
-          // Verify we get a valid response from the server
-          if (response.status >= 200 && response.status < 500) {
-            window.location.reload();
-            return;
-          }
-        } catch {
-          // Unable to connect to the server, ignore.
+  <script>
+    // Manual reload feature.
+    document.getElementById('reload').addEventListener('click', () => {
+      window.location.reload();
+    });
+
+    // Listen to changes in the network state, reload when online.
+    // This handles the case when the device is completely offline.
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+
+    // Check if the server is responding and reload the page if it is.
+    // This handles the case when the device is online, but the server
+    // is offline or misbehaving.
+    async function checkNetworkAndReload() {
+      try {
+        const response = await fetch('.');
+        // Verify we get a valid response from the server
+        if (response.status >= 200 && response.status < 500) {
+          window.location.reload();
+          return;
         }
-        window.setTimeout(checkNetworkAndReload, 2500);
+      } catch {
+        // Unable to connect to the server, ignore.
       }
+      window.setTimeout(checkNetworkAndReload, 2500);
+    }
 
-      checkNetworkAndReload();
-    </script>
-  </body>
+    checkNetworkAndReload();
+  </script>
+
+</body>
 </html>
