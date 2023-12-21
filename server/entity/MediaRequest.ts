@@ -210,7 +210,6 @@ export class MediaRequest {
             requestBody.is4k
               ? Permission.AUTO_APPROVE_4K_MOVIE
               : Permission.AUTO_APPROVE_MOVIE,
-            Permission.MANAGE_REQUESTS,
           ],
           { type: 'or' }
         )
@@ -224,7 +223,6 @@ export class MediaRequest {
             requestBody.is4k
               ? Permission.AUTO_APPROVE_4K_MOVIE
               : Permission.AUTO_APPROVE_MOVIE,
-            Permission.MANAGE_REQUESTS,
           ],
           { type: 'or' }
         )
@@ -313,7 +311,6 @@ export class MediaRequest {
             requestBody.is4k
               ? Permission.AUTO_APPROVE_4K_TV
               : Permission.AUTO_APPROVE_TV,
-            Permission.MANAGE_REQUESTS,
           ],
           { type: 'or' }
         )
@@ -327,7 +324,6 @@ export class MediaRequest {
             requestBody.is4k
               ? Permission.AUTO_APPROVE_4K_TV
               : Permission.AUTO_APPROVE_TV,
-            Permission.MANAGE_REQUESTS,
           ],
           { type: 'or' }
         )
@@ -351,7 +347,6 @@ export class MediaRequest {
                   requestBody.is4k
                     ? Permission.AUTO_APPROVE_4K_TV
                     : Permission.AUTO_APPROVE_TV,
-                  Permission.MANAGE_REQUESTS,
                 ],
                 { type: 'or' }
               )

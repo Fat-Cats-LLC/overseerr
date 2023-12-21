@@ -234,7 +234,6 @@ const CollectionRequestModal = ({
 
   const hasAutoApprove = hasPermission(
     [
-      Permission.MANAGE_REQUESTS,
       is4k ? Permission.AUTO_APPROVE_4K : Permission.AUTO_APPROVE,
       is4k ? Permission.AUTO_APPROVE_4K_MOVIE : Permission.AUTO_APPROVE_MOVIE,
     ],

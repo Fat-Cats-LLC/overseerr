@@ -36,15 +36,6 @@ const PermissionOption = ({
 }: PermissionOptionProps) => {
   const settings = useSettings();
 
-  const autoApprovePermissions = [
-    Permission.AUTO_APPROVE,
-    Permission.AUTO_APPROVE_MOVIE,
-    Permission.AUTO_APPROVE_TV,
-    Permission.AUTO_APPROVE_4K,
-    Permission.AUTO_APPROVE_4K_MOVIE,
-    Permission.AUTO_APPROVE_4K_TV,
-  ];
-
   let disabled = false;
   let checked = hasPermission(option.permission, currentPermission);
 
@@ -54,9 +45,6 @@ const PermissionOption = ({
     // Admin permission automatically bypasses/grants all other permissions
     (option.permission !== Permission.ADMIN &&
       hasPermission(Permission.ADMIN, currentPermission)) ||
-    // Manage Requests permission automatically grants all Auto-Approve permissions
-    (autoApprovePermissions.includes(option.permission) &&
-      hasPermission(Permission.MANAGE_REQUESTS, currentPermission)) ||
     // Selecting a parent permission automatically selects all children
     (!!parent?.permission &&
       hasPermission(parent.permission, currentPermission))

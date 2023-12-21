@@ -144,8 +144,7 @@ const NotificationTypeSelector = ({
   const availableTypes = useMemo(() => {
     const allRequestsAutoApproved =
       user &&
-      // Has Manage Requests perm, which grants all Auto-Approve perms
-      (hasPermission(Permission.MANAGE_REQUESTS) ||
+      (
         // Cannot submit requests of any type
         !hasPermission(
           [

@@ -222,7 +222,7 @@ const MovieRequestModal = ({
         subTitle={data?.title}
         onOk={() =>
           hasPermission(Permission.MANAGE_REQUESTS)
-            ? updateRequest(true)
+            ? updateRequest(true) // TODO: editing requests still approves request
             : hasPermission(Permission.REQUEST_ADVANCED)
             ? updateRequest()
             : cancelRequest()
@@ -293,7 +293,6 @@ const MovieRequestModal = ({
 
   const hasAutoApprove = hasPermission(
     [
-      Permission.MANAGE_REQUESTS,
       is4k ? Permission.AUTO_APPROVE_4K : Permission.AUTO_APPROVE,
       is4k ? Permission.AUTO_APPROVE_4K_MOVIE : Permission.AUTO_APPROVE_MOVIE,
     ],

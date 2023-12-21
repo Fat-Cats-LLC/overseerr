@@ -456,7 +456,6 @@ const TvRequestModal = ({
         : null}
       {hasPermission(
         [
-          Permission.MANAGE_REQUESTS,
           is4k ? Permission.AUTO_APPROVE_4K : Permission.AUTO_APPROVE,
           is4k ? Permission.AUTO_APPROVE_4K_TV : Permission.AUTO_APPROVE_TV,
         ],
