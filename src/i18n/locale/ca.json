@@ -1224,6 +1224,6 @@
   "components.StatusBadge.seasonepisodenumber": "S{seasonNumber}E{episodeNumber}",
   "components.Settings.SettingsJobsCache.availability-sync": "Sincronització de disponibilitat de contingut",
   "components.Discover.tmdbmoviestreamingservices": "Serveis de transmissió de pel·lícules TMDB",
-  "components.Discover.tmdbtvstreamingservices": "Serveis de transmissió de TV TMDB"
+  "components.Discover.tmdbtvstreamingservices": "Serveis de transmissió de TV TMDB",
   "components.Settings.SettingsJobsCache.imagecacheDescription": "Quan està activat a la configuració, Oversneedrr enviarà les imatges a la memòria cau de fonts externes preconfigurades. Les imatges emmagatzemades a la memòria cau es desen a la vostra carpeta de configuració. Podeu trobar els fitxers a <code>{appDataPath}/cache/images</code>."
 }
