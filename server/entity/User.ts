@@ -1,5 +1,4 @@
 import { MediaRequestStatus, MediaType } from '@server/constants/media';
-import { UserType } from '@server/constants/user';
 import { getRepository } from '@server/datasource';
 import type { QuotaResponse } from '@server/interfaces/api/userInterfaces';
 import PreparedEmail from '@server/lib/email';
@@ -39,9 +38,13 @@ export class User {
     return users.map((u) => u.filter(showFiltered));
   }
 
-  static readonly filteredFields: string[] = ['email', 'plexId'];
+  static readonly filteredFields: (keyof User)[] = ['email', 'plexId']; // Fields that show only be shown to admins in user API responses
 
   public displayName: string;
+
+  public isPlexUser: boolean;
+
+  public isLocalUser: boolean;
 
   @PrimaryGeneratedColumn()
   public id: number;
@@ -55,13 +58,13 @@ export class User {
   })
   public email: string;
 
-  @Column({ nullable: true })
-  public plexUsername?: string;
+  @Column({ type: 'varchar', nullable: true, select: false }) // FIXME: select may need to be true
+  public plexUsername?: string | null;
 
   @Column({ nullable: true })
   public username?: string;
 
-  @Column({ nullable: true, select: false })
+  @Column({ nullable: true, select: false})
   public password?: string;
 
   @Column({ nullable: true, select: false })
@@ -70,20 +73,17 @@ export class User {
   @Column({ type: 'date', nullable: true })
   public recoveryLinkExpirationDate?: Date | null;
 
-  @Column({ type: 'integer', default: UserType.PLEX })
-  public userType: UserType;
+  @Column({ nullable: true, type: 'int' })
+  public plexId?: number | null;
 
-  @Column({ nullable: true, select: true })
-  public plexId?: number;
-
-  @Column({ nullable: true, select: false })
-  public plexToken?: string;
+  @Column({ type: 'varchar', nullable: true, select: false })
+  public plexToken?: string | null;
 
   @Column({ type: 'integer', default: 0 })
   public permissions = 0;
 
   @Column()
-  public avatar: string;
+  public avatar: string | null; // FIXME: see server/routes/auth.ts line 209
 
   @RelationCount((user: User) => user.requests)
   public requestCount: number;
@@ -229,8 +229,10 @@ export class User {
   }
 
   @AfterLoad()
-  public setDisplayName(): void {
+  public setLocalProperties(): void {
     this.displayName = this.username || this.plexUsername || this.email;
+    this.isPlexUser = !!this.plexId;
+    this.isLocalUser = !!this.password; // FIXME: All users should become "local" users.
   }
 
   public async getQuota(): Promise<QuotaResponse> {

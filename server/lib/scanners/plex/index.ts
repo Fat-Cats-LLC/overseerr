@@ -70,6 +70,10 @@ class PlexScanner
         return this.log('No admin configured. Plex scan skipped.', 'warn');
       }
 
+      if (!admin.plexToken || !settings.plex.ip) {
+        return this.log('Plex server isn\'t configured. Plex scan skipped.', 'warn');
+      }
+
       this.plexClient = new PlexAPI({ plexToken: admin.plexToken });
 
       this.libraries = settings.plex.libraries.filter(
