@@ -1,6 +1,6 @@
 import LoadingSpinner from '@app/components/Common/LoadingSpinner';
 
-const PlexLoading = () => {
+const Loader = () => {
   return (
     <div>
       <LoadingSpinner />
@@ -8,4 +8,4 @@ const PlexLoading = () => {
   );
 };
 
-export default PlexLoading;
+export default Loader;

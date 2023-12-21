@@ -206,7 +206,7 @@ authRoutes.get('/plex/unlink', isAuthenticated(), async (req, res, next) => {
 
     user.plexId = null;
     user.plexToken = null;
-    user.avatar = null; // FIXME: Is this actually required?
+    user.avatar = '/favicon.png'; // FIXME: Is this actually required?
     user.plexUsername = null;
 
     await userRepository.save(user);

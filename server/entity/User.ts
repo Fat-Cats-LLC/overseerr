@@ -83,7 +83,7 @@ export class User {
   public permissions = 0;
 
   @Column()
-  public avatar: string | null; // FIXME: see server/routes/auth.ts line 209
+  public avatar: string | '/favicon.png'; // FIXME: see server/routes/auth.ts line 209
 
   @RelationCount((user: User) => user.requests)
   public requestCount: number;

@@ -3,7 +3,7 @@ import PushoverAPI from '@server/api/pushover';
 import TheMovieDb from '@server/api/themoviedb';
 import { getRepository } from '@server/datasource';
 import DiscoverSlider from '@server/entity/DiscoverSlider';
-import User from '@server/entity/User';
+import { User } from '@server/entity/User';
 import type { StatusResponse } from '@server/interfaces/api/settingsInterfaces';
 import { Permission } from '@server/lib/permissions';
 import { getSettings, type FullPublicSettings } from '@server/lib/settings';
