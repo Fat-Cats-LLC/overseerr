@@ -6,8 +6,6 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-
-        Please note that we use GitHub issues exclusively for bug reports and feature requests. For support requests, please use our other support channels to get help.
   - type: textarea
     id: description
     attributes:
@@ -19,7 +17,7 @@ body:
     id: version
     attributes:
       label: Version
-      description: What version of Overseerr are you running? (You can find this in Settings → About → Version.)
+      description: What version of Oversneedrr are you running? (You can find this in Settings → About → Version.)
     validations:
       required: true
   - type: textarea
@@ -81,11 +79,3 @@ body:
     attributes:
       label: Additional Context
       description: Please provide any additional information that may be relevant or helpful.
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/sct/overseerr/blob/develop/CODE_OF_CONDUCT.md)
-      options:
-        - label: I agree to follow Overseerr's Code of Conduct
-          required: true
