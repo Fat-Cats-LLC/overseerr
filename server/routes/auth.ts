@@ -228,7 +228,7 @@ authRoutes.get('/plex/unlink', isAuthenticated(), async (req, res, next) => {
 authRoutes.post('/local', async (req, res, next) => {
   const settings = getSettings();
   const userRepository = getRepository(User);
-  const body = req.body as { email?: string; password?: string };
+  const body = req.body as { username?: string; email?: string; password?: string };
 
   if (!settings.main.localLogin) {
     return res.status(500).json({ error: 'Password sign-in is disabled.' });
@@ -245,10 +245,13 @@ authRoutes.post('/local', async (req, res, next) => {
       .getOne();
 
     if (!user && !(await userRepository.count())) {
+      // automatically register user if one does not exist
       // FIXME: configurable Gravatar support
       user = new User({
+        username: body.username,
         email: body.email,
         permissions: Permission.ADMIN,
+        avatar: '/favicon.png', // FIXME: This needs to be changed to a proper default
       });
       await user.setPassword(body.password);
       await userRepository.save(user);
@@ -265,7 +268,7 @@ authRoutes.post('/local', async (req, res, next) => {
       });
     }
 
-    const mainUser = await userRepository.findOneOrFail({ // FIXME: findOneOrFail or findOneBy or findOneByOrFail
+    const mainUser = await userRepository.findOne({
       select: { id: true, plexToken: true, plexId: true },
       where: { id: 1 },
     });
@@ -341,7 +344,7 @@ authRoutes.post('/local', async (req, res, next) => {
     }
 
     return res.status(200).json(user?.filter() ?? {});
-  } catch (e) {
+  } /*catch (e) {
     logger.error(
       'Something went wrong authenticating with Oversneedrr password',
       {
@@ -355,7 +358,7 @@ authRoutes.post('/local', async (req, res, next) => {
       status: 500,
       message: 'Unable to authenticate.',
     });
-  }
+  }*/ finally { console.log('balls');}
 });
 
 authRoutes.post('/logout', (req, res, next) => {
@@ -389,7 +392,7 @@ authRoutes.post('/reset-password', async (req, res, next) => {
 
   if (user) {
     await user.resetPassword();
-    userRepository.save(user);
+    await userRepository.save(user);
     logger.info('Successfully sent password reset link', {
       label: 'API',
       ip: req.ip,

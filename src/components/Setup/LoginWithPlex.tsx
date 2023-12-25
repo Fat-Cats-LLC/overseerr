@@ -2,11 +2,6 @@ import PlexLoginButton from '@app/components/PlexLoginButton';
 import { useUser } from '@app/hooks/useUser';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { defineMessages, useIntl } from 'react-intl';
-
-const messages = defineMessages({
-  signinwithplex: 'Sign In with Plex',
-});
 
 type LoginWithPlexProps = Omit<
   React.ComponentPropsWithoutRef<typeof PlexLoginButton>,
@@ -20,7 +15,6 @@ const LoginWithPlex = ({
                          ...plexLoginButtonProps
                        }: LoginWithPlexProps) => {
 
-  const intl = useIntl();
   const [authToken, setAuthToken] = useState<string | undefined>(undefined);
   const { revalidate } = useUser();
 
@@ -49,7 +43,6 @@ const LoginWithPlex = ({
     <form>
       <PlexLoginButton
         onAuthToken={(authToken) => setAuthToken(authToken)}
-        textOverride={intl.formatMessage(messages.signinwithplex)}
         {...plexLoginButtonProps}
       />
     </form>

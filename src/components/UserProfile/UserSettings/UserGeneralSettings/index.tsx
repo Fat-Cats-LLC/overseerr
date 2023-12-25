@@ -222,71 +222,73 @@ const UserGeneralSettings = () => {
                 <label className="text-label">
                   {intl.formatMessage(messages.connectedaccounts)}
                 </label>
-                {!currentSettings.plexLoginEnabled && user?.id !== 1 && (
-                  <div className="mb-1 text-sm font-medium leading-5 text-gray-400 sm:mt-2">
-                    <div className="flex max-w-lg items-center">
-                      {intl.formatMessage(messages.noconnectedavailable)}
-                    </div>
-                  </div>
-                )}
-                {(currentSettings.plexLoginEnabled || user?.id === 1) && (
-                  <div className="flex items-center rounded sm:col-span-2">
-                    <div className="mr-4 flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-gray-800">
-                      <CheckCircleIcon
-                        className={`h-full w-full ${
-                          user?.isPlexUser ? 'text-green-500' : 'text-gray-700'
-                        }`}
-                      />
-                    </div>
-                    <PlexLogo className="h-8 border-r border-gray-700 pr-4" />
-                    {user?.id !== currentUser?.id ? (
-                      <div className="ml-4 text-sm text-gray-400">
-                        {intl.formatMessage(messages.onlyloggedinuseredit)}
+                <div className="form-row flex flex-col">
+                  {!currentSettings.plexLoginEnabled && user?.id !== 1 && (
+                    <div className="mb-1 text-sm font-medium leading-5 text-gray-400 sm:mt-2">
+                      <div className="flex max-w-lg items-center">
+                        {intl.formatMessage(messages.noconnectedavailable)}
                       </div>
-                    ) : (
-                      <>
-                        {!user?.isPlexUser ? (
-                          <>
-                            <div className="ml-4">
-                              <LoginWithPlex
-                                onComplete={() => {
-                                  revalidateUser();
-                                }}
-                                textOverride={intl.formatMessage(
-                                  messages.connectplexaccount
+                    </div>
+                  )}
+                  {(currentSettings.plexLoginEnabled || user?.id === 1) && (
+                    <div className="flex items-center rounded sm:col-span-2">
+                      <div
+                        className="mr-4 flex h-7 w-7 items-center justify-center rounded-full border border-gray-700 bg-gray-800">
+                        <CheckCircleIcon
+                          className={`h-full w-full ${
+                            user?.isPlexUser ? 'text-green-500' : 'text-gray-700'
+                          }`}
+                        />
+                      </div>
+                      <PlexLogo className="h-8 border-r border-gray-700 pr-4"/>
+                      {user?.id !== currentUser?.id ? (
+                        <div className="ml-4 text-sm text-gray-400">
+                          {intl.formatMessage(messages.onlyloggedinuseredit)}
+                        </div>
+                      ) : (
+                        <>
+                          {!user?.isPlexUser ? (
+                            <>
+                              <div className="ml-4">
+                                <LoginWithPlex
+                                  onComplete={() => {
+                                    revalidateUser();
+                                  }}
+                                  textOverride={intl.formatMessage(
+                                    messages.connectplexaccount
+                                  )}
+                                />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="ml-4">
+                                <LoginWithPlex
+                                  onComplete={() => {
+                                    addToast(
+                                      intl.formatMessage(messages.refreshedtoken),
+                                      {
+                                        appearance: 'success',
+                                        autoDismiss: true,
+                                      }
+                                    );
+                                    revalidateUser();
+                                  }}
+                                  svgIcon={<ArrowPathIcon/>}
+                                  textOverride={intl.formatMessage(
+                                    messages.refreshtoken
+                                  )}
+                                  buttonSize="sm"
+                                  buttonType="primary"
+                                />
+                              </div>
+                              <Tooltip
+                                content={intl.formatMessage(
+                                  messages.mustsetpasswordplex
                                 )}
-                              />
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <div className="ml-4">
-                              <LoginWithPlex
-                                onComplete={() => {
-                                  addToast(
-                                    intl.formatMessage(messages.refreshedtoken),
-                                    {
-                                      appearance: 'success',
-                                      autoDismiss: true,
-                                    }
-                                  );
-                                  revalidateUser();
-                                }}
-                                svgIcon={<ArrowPathIcon />}
-                                textOverride={intl.formatMessage(
-                                  messages.refreshtoken
-                                )}
-                                buttonSize="sm"
-                                buttonType="primary"
-                              />
-                            </div>
-                            <Tooltip
-                              content={intl.formatMessage(
-                                messages.mustsetpasswordplex
-                              )}
-                              // We only want to show the tooltip if the user is not a local user
-                              disabled={user?.isLocalUser}
-                            >
+                                // We only want to show the tooltip if the user is not a local user
+                                disabled={user?.isLocalUser}
+                              >
                               <span>
                                 <Button
                                   type="button"
@@ -295,7 +297,7 @@ const UserGeneralSettings = () => {
                                   onClick={() => unlinkPlex()}
                                   disabled={!user?.isLocalUser}
                                 >
-                                  <XCircleIcon />
+                                  <XCircleIcon/>
                                   <span>
                                     {intl.formatMessage(
                                       messages.disconnectPlex
@@ -303,13 +305,14 @@ const UserGeneralSettings = () => {
                                   </span>
                                 </Button>
                               </span>
-                            </Tooltip>
-                          </>
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
+                              </Tooltip>
+                            </>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="form-row">
                 <label className="text-label">
@@ -320,8 +323,8 @@ const UserGeneralSettings = () => {
                     {user?.id === 1
                       ? intl.formatMessage(messages.owner)
                       : hasPermission(Permission.ADMIN)
-                      ? intl.formatMessage(messages.admin)
-                      : intl.formatMessage(messages.user)}
+                        ? intl.formatMessage(messages.admin)
+                        : intl.formatMessage(messages.user)}
                   </div>
                 </div>
               </div>
@@ -368,7 +371,7 @@ const UserGeneralSettings = () => {
                 </label>
                 <div className="form-input-area">
                   <div className="form-input-field">
-                    <Field id="discordId" name="discordId" type="text" />
+                    <Field id="discordId" name="discordId" type="text"/>
                   </div>
                   {errors.discordId &&
                     touched.discordId &&
@@ -387,7 +390,7 @@ const UserGeneralSettings = () => {
                       <option value="" lang={locale}>
                         {intl.formatMessage(messages.languageDefault, {
                           language:
-                            availableLanguages[currentSettings.locale].display,
+                          availableLanguages[currentSettings.locale].display,
                         })}
                       </option>
                       {(
@@ -408,7 +411,7 @@ const UserGeneralSettings = () => {
                 </div>
               </div>
               <div className="form-row">
-                <label htmlFor="displayName" className="text-label">
+              <label htmlFor="displayName" className="text-label">
                   <span>{intl.formatMessage(messages.region)}</span>
                   <span className="label-tip">
                     {intl.formatMessage(messages.regionTip)}
@@ -529,9 +532,9 @@ const UserGeneralSettings = () => {
                   </>
                 )}
               {hasPermission(
-                [Permission.AUTO_REQUEST, Permission.AUTO_REQUEST_MOVIE],
-                { type: 'or' }
-              ) &&
+                  [Permission.AUTO_REQUEST, Permission.AUTO_REQUEST_MOVIE],
+                  {type: 'or'}
+                ) &&
                 user?.isPlexUser && (
                   <div className="form-row">
                     <label
@@ -577,9 +580,9 @@ const UserGeneralSettings = () => {
                   </div>
                 )}
               {hasPermission(
-                [Permission.AUTO_REQUEST, Permission.AUTO_REQUEST_TV],
-                { type: 'or' }
-              ) &&
+                  [Permission.AUTO_REQUEST, Permission.AUTO_REQUEST_TV],
+                  {type: 'or'}
+                ) &&
                 user?.isPlexUser && (
                   <div className="form-row">
                     <label htmlFor="watchlistSyncTv" className="checkbox-label">
@@ -629,7 +632,7 @@ const UserGeneralSettings = () => {
                       type="submit"
                       disabled={isSubmitting || !isValid}
                     >
-                      <ArrowDownOnSquareIcon />
+                      <ArrowDownOnSquareIcon/>
                       <span>
                         {isSubmitting
                           ? intl.formatMessage(globalMessages.saving)

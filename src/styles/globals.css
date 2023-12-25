@@ -246,6 +246,19 @@
     @apply flex max-w-xl rounded-md shadow-sm;
   }
 
+  .username-email-field .form-input-field {
+    flex-direction: column;
+    margin: 0 .5em;
+    width: 100%;
+    height: 100%;
+  }
+  .username-email-field .form-input-field:first-of-type {
+    margin-left: 0;
+  }
+  .username-email-field .form-input-field:last-of-type {
+    margin-right: 0;
+  }
+
   .actions {
     @apply mt-8 border-t border-gray-700 pt-5 text-white;
   }

@@ -16,7 +16,7 @@ import BackgroundImage from "@app/components/Common/BackgroundImage";
 const messages = defineMessages({
   signin: 'Sign In',
   signinheader: 'Sign in to continue',
-  signinwithplex: 'Use your Plex account',
+  signinwith: 'Sign in with...',
   signinwithoverseerr: 'Use your {applicationTitle} account',
 });
 
@@ -115,7 +115,7 @@ const Login = () => {
                     onClick={() => handleClick(0)}
                     disabled={!settings.currentSettings.localLogin}
                   >
-                    {intl.formatMessage(messages.signinwithplex)}
+                    {intl.formatMessage(messages.signinwith)}
                   </button>
                   <AccordionContent isOpen={openIndexes.includes(0)}>
                     <div className="px-10 py-8">

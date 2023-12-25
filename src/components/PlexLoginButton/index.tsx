@@ -1,12 +1,12 @@
 import Button from '@app/components/Common/Button';
 import globalMessages from '@app/i18n/globalMessages';
+import PlexIcon from '@app/assets/services/plex-icon.svg';
 import PlexOAuth from '@app/utils/plex';
-import { ArrowLeftOnRectangleIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
 
 const messages = defineMessages({
-  signinwithplex: 'Sign In',
+  signinwithplex: 'Sign In with Plex',
   signingin: 'Signing In…',
 });
 
@@ -31,7 +31,6 @@ const PlexLoginButton = ({
                            textOverride,
                            buttonType = 'plex',
                            buttonSize,
-                           svgIcon,
                            disabled,
                          }: PlexLoginButtonProps) => {
   const intl = useIntl();
@@ -62,7 +61,7 @@ const PlexLoginButton = ({
         buttonType={buttonType}
         buttonSize={buttonSize}
       >
-        {svgIcon ?? <ArrowLeftOnRectangleIcon />}
+        <PlexIcon />
         <span>
           {loading
             ? intl.formatMessage(globalMessages.loading)

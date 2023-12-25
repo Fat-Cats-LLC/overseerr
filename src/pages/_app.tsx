@@ -207,6 +207,13 @@ CoreApp.getInitialProps = async (initialProps) => {
         ctx.res.end();
       }
     } else {
+      if (router.pathname.match(/(setup)/)) {
+        // the thing being initialized means that setup has been completed, don't allow /setup access anymore
+        ctx.res.writeHead(307, {
+          Location: '/',
+        });
+        ctx.res.end();
+      };
       try {
         // Attempt to get the user by running a request to the local api
         const response = await axios.get<User>(
