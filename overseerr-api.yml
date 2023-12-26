@@ -3645,6 +3645,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+  /user/discord/{discordId}:
+    get:
+      summary: Get user by Discord ID
+      description: |
+        Retrieves user details in a JSON object via their Discord user ID. Requires the `MANAGE_USERS` permission.
+      tags:
+        - users
+      parameters:
+        - in: path
+          name: discordId
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Users details in JSON
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
   /user/{userId}/requests:
     get:
       summary: Get requests for a specific user

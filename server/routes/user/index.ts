@@ -6,6 +6,7 @@ import { getRepository } from '@server/datasource';
 import Media from '@server/entity/Media';
 import { MediaRequest } from '@server/entity/MediaRequest';
 import { User } from '@server/entity/User';
+import { UserSettings } from '@server/entity/UserSettings';
 import { UserPushSubscription } from '@server/entity/UserPushSubscription';
 import type { WatchlistResponse } from '@server/interfaces/api/discoverInterfaces';
 import type {
@@ -177,6 +178,27 @@ router.post<
       label: 'API',
     });
     next({ status: 500, message: 'Failed to register subscription.' });
+  }
+});
+
+router.get<{ discordId: string }>('/discord/:discordId', isAuthenticated(Permission.MANAGE_USERS), async (req, res, next) => {
+  try {
+    const usersettingsRepository = getRepository(UserSettings);
+    const userRepository = getRepository(User);
+
+    const userSettings = await usersettingsRepository.findOneOrFail({
+      where: { discordId: String(req.params.discordId) }
+    });
+
+    const user = await userRepository.findOneOrFail({
+      where: {id: Number(userSettings.id)}
+    })
+
+    return res
+      .status(200)
+      .json(user);
+  } catch (e) {
+    next({ status: 404, message: 'User not found.' });
   }
 });
 
