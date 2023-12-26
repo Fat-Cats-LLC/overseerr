@@ -72,7 +72,7 @@ export class UserSettings {
     transformer: {
       from: (value: string | null): Partial<NotificationAgentTypes> => {
         const defaultTypes = {
-          email: ALL_NOTIFICATIONS,
+          email: 0,
           discord: 0,
           pushbullet: 0,
           pushover: 0,
@@ -95,7 +95,7 @@ export class UserSettings {
         }
 
         if (values.email == null) {
-          values.email = ALL_NOTIFICATIONS;
+          values.email = 0;
         }
 
         if (values.webpush == null) {
