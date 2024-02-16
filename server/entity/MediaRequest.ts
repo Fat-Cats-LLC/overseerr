@@ -12,7 +12,7 @@ import {
   MediaStatus,
   MediaType,
 } from '@server/constants/media';
-import { getRepository, isPgsql } from '@server/datasource';
+import { getRepository } from '@server/datasource';
 import type { MediaRequestBody } from '@server/interfaces/api/requestInterfaces';
 import notificationManager, { Notification } from '@server/lib/notifications';
 import { Permission } from '@server/lib/permissions';
@@ -565,12 +565,15 @@ export class MediaRequest {
       return;
     }
 
-    // Typeorm pgsql doesn't load this relation even though the query specifically
-    // calls for it. The fk will get blown away from media_request when it is
-    // saved. Adding request back in prior to saving.
-    if (isPgsql) {
-      media.requests.push(this);
-    }
+    /* really shitty hack for bullshit that TypeORM does with PostgreSQL
+    because I think we're in the actual update for this table the media relations
+    never get updated meaning when it tries to .save() it will push the old record
+    because it does a recursive save (it saves both to `media` and the request relation.
+    @zackhow tried to fix this by just pushing *this* to the requests relation but that
+    doesnt really work atleast after i think some of my mods. I'll try just replacing the
+    old entry and praying. */
+    media.requests.pop();
+    media.requests.push(this);
 
     const seasonRequestRepository = getRepository(SeasonRequest);
     if (
@@ -603,8 +606,7 @@ export class MediaRequest {
       this.status === MediaRequestStatus.DECLINED &&
       media.requests.filter(
         (request) => request.status === MediaRequestStatus.PENDING
-      ).length === 0 &&
-      media[this.is4k ? 'status4k' : 'status'] === MediaStatus.PENDING
+      ).length === 0 && media[this.is4k ? 'status4k' : 'status'] === MediaStatus.PENDING
     ) {
       media[this.is4k ? 'status4k' : 'status'] = MediaStatus.UNKNOWN;
       mediaRepository.save(media);
@@ -620,6 +622,7 @@ export class MediaRequest {
         seasonRequestRepository.save(season);
       });
     }
+    logger.debug('Func completed!')
   }
 
   @AfterRemove()
@@ -630,12 +633,15 @@ export class MediaRequest {
       relations: { requests: true },
     });
 
-    // Typeorm pgsql doesn't load this relation even though the query specifically
-    // calls for it. The fk will get blown away from media_request when it is
-    // saved. Adding request back in prior to saving.
-    if (isPgsql) {
-      fullMedia.requests.push(this);
-    }
+    /* really shitty hack for bullshit that TypeORM does with PostgreSQL
+    because I think we're in the actual update for this table the media relations
+    never get updated meaning when it tries to .save() it will push the old record
+    because it does a recursive save (it saves both to `media` and the request relation.
+    @zackhow tried to fix this by just pushing *this* to the requests relation but that
+    doesnt really work atleast after i think some of my mods. I'll try just replacing the
+    old entry and praying. */
+    fullMedia.requests.pop();
+    fullMedia.requests.push(this);
 
     if (
       !fullMedia.requests.some((request) => !request.is4k) &&

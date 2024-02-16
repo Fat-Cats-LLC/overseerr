@@ -30,8 +30,6 @@ const prodConfig: DataSourceOptions = {
   subscribers: ['dist/subscriber/**/*.js'],
 };
 
-export const isPgsql = process.env.DB_TYPE === 'postgres';
-
 function getDataSource(): DataSourceOptions {
   if (process.env.NODE_ENV === 'production') {
     return prodConfig;
